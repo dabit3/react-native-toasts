@@ -59,7 +59,7 @@ class toasts extends Component {
             Hello from Toast!
           </Text>
         </Animated.View>
-    </View>
+      </View>
     );
   }
 }
