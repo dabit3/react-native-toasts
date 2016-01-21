@@ -44,7 +44,6 @@ class toasts extends Component {
     }, 2000)
   }
 
-
   render() {
     return (
       <View>
