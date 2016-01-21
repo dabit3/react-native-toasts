@@ -62,9 +62,9 @@ class toasts extends Component {
             </TouchableHighlight>
           </View>
         </View>
-        <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: 'green', position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
+        <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: this.state.toastColor, position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
           <Text style={{ marginLeft: 10,  color: 'white',  fontSize:16, fontWeight: 'bold' }}>
-            Hello from Toast!
+            { this.state.message }
           </Text>
         </Animated.View>
       </View>
