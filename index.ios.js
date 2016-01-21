@@ -24,7 +24,7 @@ class toasts extends Component {
     this.animatedValue = new Animated.Value(-70)
   }
 
-  callToast(type, message) {
+  callToast() {
     Animated.timing(
       this.animatedValue,
       { 
