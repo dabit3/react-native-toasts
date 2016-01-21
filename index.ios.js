@@ -53,12 +53,12 @@ class toasts extends Component {
                 <Text>Open Success Toast</Text>
             </TouchableHighlight>
           </View>
-      </View>
-      <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: 'green', position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
-        <Text style={{ marginLeft: 10,  color: 'white',  fontSize:16, fontWeight: 'bold' }}>
-          Hello from Toast!
-        </Text>
-      </Animated.View>
+        </View>
+        <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: 'green', position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
+          <Text style={{ marginLeft: 10,  color: 'white',  fontSize:16, fontWeight: 'bold' }}>
+            Hello from Toast!
+          </Text>
+        </Animated.View>
     </View>
     );
   }
