@@ -4,6 +4,6 @@
 
 ### To get started with this project, do the following:
 
-1. Git clone the project
+1. git clone the project
 2. cd into the project
 3. run `npm install` from your command line
