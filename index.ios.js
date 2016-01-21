@@ -22,6 +22,7 @@ class toasts extends Component {
   constructor(props) {
     super(props)
     this.animatedValue = new Animated.Value(-70)
+    this.animatedXValue = new Animated.Value(-windowWidth)
     this.state = {
       modalShown: false,
       toastColor: 'green',
