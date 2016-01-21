@@ -54,6 +54,26 @@ class toasts extends Component {
     }, 2000)
   }
 
+  callXToast() {
+    Animated.timing(
+      this.animatedXValue,
+      { 
+        toValue: 0,
+        duration: 350
+      }).start(this.closeXToast())
+  }
+
+  closeXToast() {
+    setTimeout(() => {
+      Animated.timing(
+      this.animatedXValue,
+      { 
+        toValue: -windowWidth,
+        duration: 350
+      }).start()
+    }, 2000)
+  }
+
   setToastType(message='Success!', type='success') {
     let color
     if (type == 'error') color = 'red'
@@ -67,31 +87,11 @@ class toasts extends Component {
     return (
       <View>
         <View style={styles.container}>
-
-          <View style={ styles.buttonContainer }>
-              <TouchableHighlight onPress={ () => this.callToast('YOYOYO') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
-                <Text>Open Success Toast</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={ styles.buttonContainer }>
-              <TouchableHighlight onPress={ () => this.callToast('Error toast called!', 'error') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
-                <Text>Open Error Toast</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={ styles.buttonContainer }>
-              <TouchableHighlight onPress={ () => this.callToast('Warning toast called!','warning') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
-                <Text>Open Warning Toast</Text>
-              </TouchableHighlight>
-            </View>
-
-            <View style={ styles.buttonContainer }>
-              <TouchableHighlight onPress={ () => this.callToast('Primary toast called!', 'primary') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
-                <Text>Open Primary Toast</Text>
-              </TouchableHighlight>
-            </View>
-
+            <Button type="success" callToast={ () => this.callToast('YOYOYO') }  />
+            <Button type="error" callToast={ () => this.callToast('Error toast called!', 'error') }  title="Something went wrong..." />
+            <Button type="warning" callToast={ () => this.callToast('Warning toast called!','warning') }  />
+            <Button type="primary" callToast={ () => this.callToast('Primary toast called!', 'primary') }  />
+            <Button type="bottom" callToast={ () => this.callXToast() }  />
         </View>
 
         <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: this.state.toastColor, position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
@@ -99,8 +99,26 @@ class toasts extends Component {
             { this.state.message }
           </Text>
         </Animated.View>
+
+        <Animated.View style={{ transform: [{ translateX: this.animatedXValue }], height: 70, marginTop: windowHeight - 70, backgroundColor: 'green', position: 'absolute', left:0, top:0, width: windowWidth, justifyContent: 'center' }}>
+          <Text style={{ marginLeft: 10, color: 'white', fontSize:16, fontWeight: 'bold', textAlign: 'center' }}>Success!</Text>
+        </Animated.View>
+
       </View>
     );
+  }
+}
+
+class Button extends Component {
+  render() {
+    let { callToast, type } = this.props
+    return (
+      <View style={ styles.buttonContainer }>
+        <TouchableHighlight onPress={ callToast } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
+          <Text>Call { type } toast.</Text>
+        </TouchableHighlight>
+      </View>
+    )
   }
 }
 
