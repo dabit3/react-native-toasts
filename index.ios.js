@@ -23,7 +23,9 @@ class toasts extends Component {
     super(props)
     this.animatedValue = new Animated.Value(-70)
     this.state = {
-      modalShown: false
+      modalShown: false,
+      toastColor: 'green',
+      message: 'Success!'
     }
   }
 
