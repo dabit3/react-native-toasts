@@ -46,46 +46,18 @@ class toasts extends Component {
 
 
   render() {
-
-
     return (
       <View>
         <View style={styles.container}>
           <View style={ styles.buttonContainer }>
-            <TouchableHighlight 
-              onPress={ () => this.callToast() } 
-              underlayColor="ddd" 
-              style={{ 
-                height:60, 
-                justifyContent: 'center', 
-                alignItems: 'center',  
-                backgroundColor: 'ededed', 
-                borderWidth: 1, 
-                borderColor: 'ddd' 
-              }}>
+            <TouchableHighlight onPress={ () => this.callToast() } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
                 <Text>Open Success Toast</Text>
             </TouchableHighlight>
           </View>
       </View>
-      <Animated.View 
-        style={{ 
-          transform: [{ translateY: this.animatedValue }], 
-          height: 70, 
-          backgroundColor: 'green', 
-          position: 'absolute',
-          left:0, 
-          top:0, 
-          right:0, 
-          justifyContent:  'center'
-        }}>
-        <Text 
-          style={{ 
-            marginLeft: 10, 
-            color: 'white', 
-            fontSize:16,   
-            fontWeight: 'bold'
-          }}>
-             Hello from Toast!
+      <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: 'green', position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
+        <Text style={{ marginLeft: 10,  color: 'white',  fontSize:16, fontWeight: 'bold' }}>
+          Hello from Toast!
         </Text>
       </Animated.View>
     </View>
