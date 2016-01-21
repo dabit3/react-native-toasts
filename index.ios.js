@@ -22,9 +22,14 @@ class toasts extends Component {
   constructor(props) {
     super(props)
     this.animatedValue = new Animated.Value(-70)
+    this.state = {
+      modalShown: false
+    }
   }
 
-  callToast(type, message) {
+  callToast() {
+    if(this.state.modalShown) return
+    this.setState({ modalShown: true })
     Animated.timing(
       this.animatedValue,
       { 
@@ -35,6 +40,7 @@ class toasts extends Component {
   
   closeToast() {
     setTimeout(() => {
+      this.setState({ modalShown: false })
       Animated.timing(
       this.animatedValue,
       { 
