@@ -10,29 +10,32 @@ import React, {
   Text,
   View,
   TouchableHighlight,
-  Animated
+  Animated,
+  Dimensions
 } from 'react-native';
+
+let windowWidth = Dimensions.get('window').width
+let windowHeight = Dimensions.get('window').height
 
 class toasts extends Component {
 
   constructor(props) {
     super(props)
-    this.animatedValue = new Animated.Value(-100)
+    this.state = {
+      toastShown: false,
+      toastColor: 'green',
+      message: ''
+    }
+    this.animatedYValue = new Animated.Value(-70),
+    this.animatedXValue = new Animated.Value(-windowWidth)
   }
 
-  componentDidMount() {
-    this.setState({
-      toastShown: false
-    })
-  }
-
-  callToast() {
+  callToast(type, message) {
     if(this.state.toastShown) return
-    this.setState({
-      toastShown: true
-    })
+    this.setToastType(type, message)
+    this.setState({ toastShown: true })
     Animated.timing(
-      this.animatedValue,
+      this.animatedYValue,
       { 
         toValue: 0,
         duration: 350
@@ -42,9 +45,9 @@ class toasts extends Component {
   closeToast() {
     setTimeout(() => {
       Animated.timing(
-      this.animatedValue,
+      this.animatedYValue,
       { 
-        toValue: -100,
+        toValue: -70,
         duration: 350
       }).start()
       this.setState({
@@ -53,20 +56,82 @@ class toasts extends Component {
     }, 2000)
   }
 
+  callXToast() {
+    Animated.timing(
+      this.animatedXValue,
+      { 
+        toValue: 0,
+        duration: 350
+      }).start(this.closeXToast())
+  }
+
+  closeXToast() {
+    setTimeout(() => {
+      Animated.timing(
+      this.animatedXValue,
+      { 
+        toValue: -windowWidth,
+        duration: 350
+      }).start()
+      this.setState({
+        toastShown: false
+      })
+    }, 2000)
+  }
+
+  setToastType(type='success', message="Success!") {
+    let color
+    if (type == 'error') color = 'red'
+    if (type == 'primary') color = '#2487DB'
+    if (type == 'warning') color = '#ec971f'
+    if (type == 'success') color = 'green'
+    this.setState({ toastColor: color, message: message })
+  }
+
   render() {
+
+    let { message } = this.state
+
     return (
       <View>
         <View style={styles.container}>
         
           <View style={ styles.buttonContainer }>
             <TouchableHighlight onPress={ () => this.callToast() } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
-              <Text>Open Toast</Text>
+              <Text>Open Success Toast</Text>
             </TouchableHighlight>
           </View>
-          
+
+          <View style={ styles.buttonContainer }>
+            <TouchableHighlight onPress={ () => this.callToast('error', 'Error toast called!') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
+              <Text>Open Error Toast</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={ styles.buttonContainer }>
+            <TouchableHighlight onPress={ () => this.callToast('warning', 'Warning toast called!') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
+              <Text>Open Warning Toast</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={ styles.buttonContainer }>
+            <TouchableHighlight onPress={ () => this.callToast('primary', 'Primary toast called!') } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
+              <Text>Open Primary Toast</Text>
+            </TouchableHighlight>
+          </View>
+
+          <View style={ styles.buttonContainer }>
+              <TouchableHighlight onPress={ () => this.callXToast() } underlayColor="ddd" style={{ height:60, justifyContent: 'center', alignItems: 'center', backgroundColor: 'ededed', borderWidth: 1, borderColor: 'ddd' }}>
+                <Text>Open X Toast Toast</Text>
+              </TouchableHighlight>
+            </View>
         </View>
-        <Animated.View style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: 'green', position: 'absolute', left:0, top:0, right:0, justifyContent: 'center' }}>
-          <Text style={{ marginLeft: 10, color: 'white', fontSize:16 }}>Success!</Text>
+        <Animated.View style={{ transform: [{ translateY: this.animatedYValue }], height: 70, backgroundColor: this.state.toastColor, position: 'absolute', left:0, top:0, right:0, justifyContent: 'center' }}>
+          <Text style={{ marginLeft: 10, color: 'white', fontSize:16, fontWeight: 'bold' }}>{ message }</Text>
+        </Animated.View>
+
+        <Animated.View style={{ transform: [{ translateX: this.animatedXValue }], height: 70, marginTop: windowHeight - 70, backgroundColor: 'green', position: 'absolute', left:0, top:0, width: windowWidth, justifyContent: 'center' }}>
+          <Text style={{ marginLeft: 10, color: 'white', fontSize:16, fontWeight: 'bold', textAlign: 'center' }}>Success!</Text>
         </Animated.View>
       </View>
     );
@@ -76,9 +141,10 @@ class toasts extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 70
   },
   buttonContainer: {
-    marginTop:100
+    marginTop:10
   }
 });
 
