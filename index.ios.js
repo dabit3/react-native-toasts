@@ -21,7 +21,7 @@ class toasts extends Component {
 
   constructor(props) {
     super(props)
-    this.animatedValue = new Animated.Value(-70)
+    this.animatedValue = new Animated.Value(0)
     this.animatedXValue = new Animated.Value(-windowWidth)
     this.state = {
       modalShown: false,
@@ -37,7 +37,7 @@ class toasts extends Component {
     Animated.timing(
       this.animatedValue,
       {
-        toValue: 0,
+        toValue: 1,
         duration: 350
       }).start(this.closeToast())
   }
@@ -48,7 +48,7 @@ class toasts extends Component {
       Animated.timing(
       this.animatedValue,
       { 
-        toValue: -70,
+        toValue: 0,
         duration: 350
       }).start()
     }, 2000)
@@ -84,6 +84,12 @@ class toasts extends Component {
   }
 
   render() {
+
+    let animation = this.animatedValue.interpolate({
+       inputRange: [0, .3, 1],
+       outputRange: [-70, -10, 0]
+     })
+
     return (
       <View>
         <View style={styles.container}>
@@ -94,7 +100,7 @@ class toasts extends Component {
             <Button type="bottom" callToast={ () => this.callXToast() }  />
         </View>
 
-        <Animated.View  style={{ transform: [{ translateY: this.animatedValue }], height: 70, backgroundColor: this.state.toastColor, position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
+        <Animated.View  style={{ transform: [{ translateY: animation }], height: 70, backgroundColor: this.state.toastColor, position: 'absolute',left:0, top:0, right:0, justifyContent:  'center' }}>
           <Text style={{ marginLeft: 10,  color: 'white',  fontSize:16, fontWeight: 'bold' }}>
             { this.state.message }
           </Text>
