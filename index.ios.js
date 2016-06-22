@@ -10,12 +10,8 @@ import React, {
   Text,
   View,
   TouchableHighlight,
-  Animated,
-  Dimensions
+  Animated
 } from 'react-native';
-
-let windowWidth = Dimensions.get('window').width
-let windowHeight = Dimensions.get('window').height
 
 class toasts extends Component {
 
